@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <%- include('header') %>
+  <body>
+    <div class="form-container">
+      <h1>Join the Club</h1>
+      <p>Enter the secret passcode to see message authors and dates!</p>
+
+      <% if (locals.error) { %>
+      <p style="color: red"><%= error %></p>
+      <% } %>
+
+      <form action="/join-club" method="POST">
+        <div class="form-group">
+          <label for="passcode">Secret Passcode</label>
+          <input
+            type="text"
+            name="passcode"
+            placeholder="Enter secret here..."
+            required
+          />
+        </div>
+        <button type="submit">Unlock Membership</button>
+      </form>
+    </div>
+  </body>
+</html>

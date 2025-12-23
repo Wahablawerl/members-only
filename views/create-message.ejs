@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <%- include('header') %>
+  <body>
+    <div class="form-container">
+      <h1>New Message</h1>
+      <p style="color: #666; margin-bottom: 20px">
+        Share your thoughts with the clubhouse.
+      </p>
+
+      <% if (locals.errors) { %>
+      <div
+        style="
+          background: #fee2e2;
+          border: 1px solid #ef4444;
+          color: #b91c1c;
+          padding: 10px;
+          border-radius: 4px;
+          margin-bottom: 20px;
+        "
+      >
+        <ul style="margin: 0; padding-left: 20px">
+          <% errors.forEach(error => { %>
+          <li><%= error.msg %></li>
+          <% }) %>
+        </ul>
+      </div>
+      <% } %>
+
+      <form action="/create-message" method="POST">
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input
+            type="text"
+            name="title"
+            placeholder="Something catchy..."
+            value="<%= locals.previousData ? previousData.title : '' %>"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="text">Message</label>
+          <textarea
+            name="text"
+            rows="6"
+            placeholder="What's on your mind?"
+            required
+          >
+<%= locals.previousData ? previousData.text : '' %></textarea
+          >
+        </div>
+        <button type="submit">Post Message</button>
+      </form>
+
+      <p style="text-align: center; margin-top: 15px">
+        <a href="/" style="color: #666; text-decoration: none">← Cancel</a>
+      </p>
+    </div>
+  </body>
+</html>

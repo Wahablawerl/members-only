@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <%- include('header') %>
+  <body>
+    <div style="max-width: 800px; width: 100%">
+      <header style="text-align: center; margin-bottom: 2rem">
+        <h1>The Secret Clubhouse</h1>
+
+        <% if (currentUser) { %>
+        <p>Welcome back, <strong><%= currentUser.username %></strong>!</p>
+
+        <div
+          style="
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            align-items: center;
+          "
+        >
+          <a
+            href="/create-message"
+            style="
+              padding: 8px 16px;
+              background: #4a90e2;
+              color: white;
+              text-decoration: none;
+              border-radius: 4px;
+              font-weight: bold;
+            "
+            >+ New Post</a
+          >
+
+          <% if (!currentUser.membership_status) { %>
+          <a href="/join-club" style="color: #e67e22; font-weight: bold"
+            >Join the Club</a
+          >
+          <% } else { %>
+          <span style="color: #27ae60; font-weight: bold">✔ Member</span>
+          <% } %> <% if (currentUser.is_admin) { %>
+          <span style="color: #8e44ad; font-weight: bold">🛡️ Admin</span>
+          <% } %>
+        </div>
+        <% } else { %>
+        <p>
+          Welcome, Guest. <a href="/log-in">Log in</a> to see who is posting!
+        </p>
+        <% } %>
+      </header>
+
+      <hr style="border: 0; border-top: 1px solid #ddd; margin: 2rem 0" />
+
+      <div class="messages-container">
+        <% if (messages && messages.length > 0) { %> <% messages.forEach(msg =>
+        { %>
+        <div
+          class="message-card"
+          style="
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          "
+        >
+          <h3 style="margin-top: 0"><%= msg.title %></h3>
+          <p style="color: #444"><%= msg.text %></p>
+
+          <div
+            style="
+              border-top: 1px solid #eee;
+              margin-top: 15px;
+              padding-top: 10px;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <div>
+              <% if (currentUser && currentUser.membership_status) { %>
+              <p style="margin: 0; font-size: 0.85rem; color: #666">
+                By <strong><%= msg.username %></strong> on <%=
+                msg.timestamp.toDateString() %>
+              </p>
+              <% } else { %>
+              <p
+                style="
+                  margin: 0;
+                  font-size: 0.85rem;
+                  color: #aaa;
+                  font-style: italic;
+                "
+              >
+                Author hidden. Join the club to see.
+              </p>
+              <% } %>
+            </div>
+
+            <% if (currentUser && currentUser.is_admin) { %>
+            <form
+              action="/delete-message"
+              method="POST"
+              onsubmit="return confirm('Delete this post?');"
+            >
+              <input type="hidden" name="messageId" value="<%= msg.id %>" />
+              <button
+                type="submit"
+                style="
+                  background: #ff4757;
+                  color: white;
+                  border: none;
+                  padding: 5px 10px;
+                  border-radius: 4px;
+                  cursor: pointer;
+                  font-size: 0.75rem;
+                "
+              >
+                Delete
+              </button>
+            </form>
+            <% } %>
+          </div>
+        </div>
+        <% }) %> <% } else { %>
+        <p style="text-align: center; color: #999; margin-top: 3rem">
+          The board is empty. Be the first to speak!
+        </p>
+        <% } %>
+      </div>
+    </div>
+  </body>
+</html>
