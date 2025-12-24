@@ -19,9 +19,7 @@ exports.signUpGet = (req, res) => {
 // Handle the form submission
 exports.signUpPost = [
   body("username")
-    .trim()
-    .isEmail()
-    .withMessage("Username must be a valid email"),
+    .trim(),
   body("password")
     .isLength({ min: 5 })
     .withMessage("Password must be at least 5 characters long"),
