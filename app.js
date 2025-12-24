@@ -6,12 +6,12 @@ const authRouter = require("./routes/authRoutes");
 
 const app = express();
 
-// 1. Setup Views
+//  Setup Views
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 
-// 2. Middleware
+//  Middleware
 app.use(express.urlencoded({ extended: false })); // Helps read form data
 app.use(
   session({
@@ -28,8 +28,8 @@ app.use((req, res, next) => {
   next();
 });
 
-// 3. Routes (We will create these next)
+//  Routes (We will create these next)
 app.use("/", authRouter);
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`)); 
