@@ -28,6 +28,13 @@ exports.createMessagePost = [
     .isLength({ min: 1 })
     .withMessage("Message cannot be empty"),
   async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.render("create-message", {
+        errors: errors.array(),
+        previousData: req.body,
+      });
+    }
     try {
       const { title, text } = req.body;
       const userId = req.user.id; // Get the logged-in user's ID

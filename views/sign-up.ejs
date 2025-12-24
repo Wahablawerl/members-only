@@ -3,10 +3,8 @@
   <%- include('header') %>
   <body>
     <div class="form-container">
-      <h1>New Message</h1>
-      <p style="color: #666; margin-bottom: 20px">
-        Share your thoughts with the clubhouse.
-      </p>
+      <h1>Sign Up</h1>
+      <p style="color: #666; margin-bottom: 20px">Join the clubhouse.</p>
 
       <% if (locals.errors) { %>
       <div
@@ -27,33 +25,59 @@
       </div>
       <% } %>
 
-      <form action="/create-message" method="POST">
+      <form action="/sign-up" method="POST">
         <div class="form-group">
-          <label for="title">Title</label>
+          <label for="firstName">First Name</label>
           <input
             type="text"
-            name="title"
-            placeholder="Something catchy..."
-            value="<%= locals.previousData ? previousData.title : '' %>"
+            name="firstName"
+            placeholder="Your first name..."
             required
           />
         </div>
         <div class="form-group">
-          <label for="text">Message</label>
-          <textarea
-            name="text"
-            rows="6"
-            placeholder="What's on your mind?"
+          <label for="lastName">Last Name</label>
+          <input
+            type="text"
+            name="lastName"
+            placeholder="Your last name..."
             required
-          >
-<%= locals.previousData ? previousData.text : '' %></textarea
-          >
+          />
         </div>
-        <button type="submit">Post Message</button>
+        <div class="form-group">
+          <label for="username">Email</label>
+          <input
+            type="email"
+            name="username"
+            placeholder="your@email.com"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            name="password"
+            placeholder="At least 5 characters"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input
+            type="password"
+            name="confirmPassword"
+            placeholder="Repeat password"
+            required
+          />
+        </div>
+        <button type="submit">Sign Up</button>
       </form>
 
       <p style="text-align: center; margin-top: 15px">
-        <a href="/" style="color: #666; text-decoration: none">← Cancel</a>
+        <a href="/log-in" style="color: #666; text-decoration: none"
+          >Already have an account? Log in</a
+        >
       </p>
     </div>
   </body>

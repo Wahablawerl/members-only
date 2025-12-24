@@ -77,7 +77,7 @@
             "
           >
             <div>
-              <% if (currentUser && currentUser.membership_status) { %>
+              <% if (currentUser) { %>
               <p style="margin: 0; font-size: 0.85rem; color: #666">
                 By <strong><%= msg.username %></strong> on <%=
                 msg.timestamp.toDateString() %>
@@ -91,7 +91,7 @@
                   font-style: italic;
                 "
               >
-                Author hidden. Join the club to see.
+                Author hidden. Log in to see.
               </p>
               <% } %>
             </div>

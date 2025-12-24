@@ -3,6 +3,14 @@ const userQueries = require("../models/userQueries");
 const passport = require("passport");
 const { body, validationResult } = require("express-validator");
 
+// Middleware to require authentication
+exports.requireAuth = (req, res, next) => {
+  if (req.user) {
+    return next();
+  }
+  res.redirect("/log-in");
+};
+
 // Display the sign-up form
 exports.signUpGet = (req, res) => {
   res.render("sign-up");
@@ -24,6 +32,10 @@ exports.signUpPost = [
     return true;
   }),
   async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.render("sign-up", { errors: errors.array() });
+    }
     try {
       const { firstName, lastName, username, password } = req.body;
 
